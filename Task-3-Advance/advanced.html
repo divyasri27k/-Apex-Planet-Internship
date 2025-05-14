@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Web Project</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #333;
+      color: white;
+      font-size: 24px;
+    }
+
+    .section {
+      margin: 30px auto;
+      max-width: 800px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        font-size: 16px;
+      }
+
+      .section {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 20px;
+      }
+
+      .section {
+        margin: 15px;
+      }
+    }
+
+    /* Quiz */
+    .question {
+      margin-bottom: 15px;
+    }
+
+    .question button {
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .question button:hover {
+      background-color: #45a049;
+    }
+
+    /* Joke API Section */
+    #jokeBtn {
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #jokeBtn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    🌐 Advanced Web Development Project
+  </header>
+
+  <!-- Responsive Design and Quiz -->
+  <section class="section" id="quiz">
+    <h2>🎓 Simple Quiz</h2>
+    <div class="question">
+      <p>Q1: What does HTML stand for?</p>
+      <button onclick="checkAnswer(this, 'correct')">HyperText Markup Language</button>
+      <button onclick="checkAnswer(this, 'wrong')">Hyperlinks and Text Management Language</button>
+    </div>
+
+    <div class="question">
+      <p>Q2: Which language is used for styling web pages?</p>
+      <button onclick="checkAnswer(this, 'correct')">CSS</button>
+      <button onclick="checkAnswer(this, 'wrong')">JavaScript</button>
+    </div>
+  </section>
+
+  <!-- API Data Fetch Section -->
+  <section class="section" id="api">
+    <h2>😂 Get a Random Joke</h2>
+    <button id="jokeBtn">Tell Me a Joke</button>
+    <p id="jokeText" style="margin-top: 10px;"></p>
+  </section>
+
+  <script>
+    // Quiz logic
+    function checkAnswer(button, type) {
+      if (type === 'correct') {
+        button.style.backgroundColor = 'green';
+        button.textContent = '✅ Correct!';
+      } else {
+        button.style.backgroundColor = 'red';
+        button.textContent = '❌ Wrong!';
+      }
+      // Disable all buttons in the question
+      const parent = button.parentElement;
+      const buttons = parent.querySelectorAll('button');
+      buttons.forEach(btn => btn.disabled = true);
+    }
+
+    // API Fetch (Joke)
+    document.getElementById("jokeBtn").addEventListener("click", async () => {
+      const res = await fetch("https://icanhazdadjoke.com/", {
+        headers: { Accept: "application/json" }
+      });
+      const data = await res.json();
+      document.getElementById("jokeText").textContent = data.joke;
+    });
+  </script>
+
+</body>
+</html>
